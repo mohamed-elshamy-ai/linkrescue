@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linkrescue"
+version = "0.1.0"
+description = "Save your links, watch their health, and keep a searchable local copy before they die."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+linkrescue = "linkrescue.cli:main"
+
+[tool.setuptools]
+packages = ["linkrescue"]

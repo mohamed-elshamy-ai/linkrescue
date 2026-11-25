@@ -1,0 +1,22 @@
+$ linkrescue add https://example.com/ https://docs.python.org/3/tutorial/ http://www.geocities.com/SiliconValley/ https://docs.python.org/3/no-such-page.html
+1. AVAILABLE  https://example.com/
+   ok
+2. AVAILABLE  https://docs.python.org/3/tutorial/
+   ok
+3. CONTENT MOVED  http://www.geocities.com/SiliconValley/
+   redirects to the home page https://www.yahoo.com/; archived copy: http://web.archive.org/web/19991009015113/http://www6.geocities.com:80/SiliconValley/
+4. BROKEN  https://docs.python.org/3/no-such-page.html
+   HTTP 404; no archived copy found
+
+$ linkrescue find "classes modules"
+2. The Python Tutorial — Python 3.15.2 documentation  [AVAILABLE]
+   https://docs.python.org/3/tutorial/
+   ...More on [Modules]
+6.1.1. Executing [modules] as scripts
+6.1...
+
+$ linkrescue list
+1. [AVAILABLE] Example Domain  (checked 2026-11-25 20:29)
+2. [AVAILABLE] The Python Tutorial — Python 3.15.2 documentation  (checked 2026-11-25 20:29)
+3. [CONTENT MOVED] http://www.geocities.com/SiliconValley/  (checked 2026-11-25 20:29)
+4. [BROKEN] https://docs.python.org/3/no-such-page.html  (checked 2026-11-25 20:29)
