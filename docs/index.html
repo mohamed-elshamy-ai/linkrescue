@@ -31,11 +31,22 @@ h1{font-size:3rem;margin:0 0 8px;letter-spacing:-1px}h1:after{content:" ✓ ⇢ 
 <main class="wrap">
 <section><h2>What it does</h2><p>LinkRescue keeps a list of links you care about. Each check tells you if a link is still fine, was redirected, is broken, or the page text changed from your saved copy. It stores the text locally so you can search it even after the page is gone, and for dead links it looks up an Internet Archive copy.</p></section>
 <section><div class="grid"><div class="card"><b>Five clear statuses</b><div class="mut">AVAILABLE, PAGE CHANGED, CONTENT MOVED, BROKEN, BLOCKED.</div></div><div class="card"><b>Local text copy</b><div class="mut">Searchable with SQLite FTS5, even after the page dies.</div></div><div class="card"><b>Archive lookup</b><div class="mut">Finds the closest Internet Archive copy for dead links.</div></div><div class="card"><b>Honest checks</b><div class="mut">A site that refuses bots is BLOCKED, not BROKEN. Soft 404 pages are caught.</div></div><div class="card"><b>Import</b><div class="mut">Browser bookmarks, a text list of URLs, or JSON.</div></div></div></section>
-<section><h2>Examples</h2><h3>Real output from the demo files in the repo</h3><pre><code>OCTOBER 12
-  10:30 AM  Created Graduation_Project.pdf   (/tmp/tcwork)
-  11:15 AM  Created architecture.py   (/tmp/tcwork)
-  12:00 PM  Created meeting_notes.docx   (/tmp/tcwork)
-  02:00 PM  Created project_presentation.pptx   (/tmp/tcwork)</code></pre></section>
+<section><h2>Examples</h2><h3>Real output (needs internet)</h3><pre><code>$ linkrescue add https://example.com/ https://docs.python.org/3/tutorial/ http://www.geocities.com/SiliconValley/ https://docs.python.org/3/no-such-page.html
+1. AVAILABLE  https://example.com/
+   ok
+2. AVAILABLE  https://docs.python.org/3/tutorial/
+   ok
+3. CONTENT MOVED  http://www.geocities.com/SiliconValley/
+   redirects to the home page https://www.yahoo.com/; archived copy: http://web.archive.org/web/19991009015113/http://www6.geocities.com:80/SiliconValley/
+4. BROKEN  https://docs.python.org/3/no-such-page.html
+   HTTP 404; no archived copy found
+
+$ linkrescue find &quot;classes modules&quot;
+2. The Python Tutorial — Python 3.15.2 documentation  [AVAILABLE]
+   https://docs.python.org/3/tutorial/
+   ...More on [Modules]
+6.1.1. Executing [modules] as scripts
+6.1...</code></pre></section>
 
 <section id="install"><h2>Install</h2><div class="os">
 <div class="card"><h3>Windows</h3><div class="mut">Install Python 3.9+ from python.org (tick "Add python.exe to PATH"), then in PowerShell:</div>
