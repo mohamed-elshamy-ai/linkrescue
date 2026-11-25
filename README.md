@@ -57,6 +57,10 @@ Statuses: `AVAILABLE`, `PAGE CHANGED` (under 90% of the text matches your saved 
 - Some sites answer automated checks with 403/429 and get `BLOCKED`.
 - Existing tools do parts of this (for example ArchiveBox, Linkwarden, Wayback Machine). LinkRescue is a small local tool with no server; it is not a replacement for them.
 
+## Similar tools (honest comparison)
+
+[Linkwarden](https://github.com/linkwarden/linkwarden) and ArchiveBox are fuller bookmark managers and archivers (self-hosted, with page archives). LinkRescue is a small command-line tool for link health with no server, plus an archive lookup. Use those if you want full-page archives.
+
 ## Technical notes
 
 [ARCHITECTURE.md](ARCHITECTURE.md), Arabic and English. 9 pytest tests against a local test server (`pytest`): available, 404, soft 404, redirect, blocked, dead host, changed page with kept copy, archive lookup, bookmark import. Output in [`demo/test-output.txt`](demo/test-output.txt).
