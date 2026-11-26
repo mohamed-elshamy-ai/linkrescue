@@ -24,7 +24,7 @@ footer img{border-radius:50%;border:2px solid var(--line);display:block;margin:0
 .badge{display:inline-block;font-size:.72rem;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mut);margin-left:6px;vertical-align:middle}
 .ok{color:#2e9e5b}.no{color:#c0392b}
 
-:root{--bg:#06141a;--fg:#e2f4f7;--mut:#7fb0ba;--card:#0b2229;--line:#17414c;--acc:#22d3ee;--accfg:#04181d;--code:#030c0f;--codefg:#a5f3fc;--warn:#fbbf24;--arabic:'Alexandria',sans-serif;--r:8px;--body:'Outfit','Alexandria',system-ui,sans-serif;--head:'Syne','Alexandria',system-ui,sans-serif}
+:root{--bg:#f1faf8;--fg:#0b2a30;--mut:#3d646d;--card:#ffffff;--line:#bfe0dc;--acc:#0e7490;--accfg:#ffffff;--code:#0b2a30;--codefg:#a5f3fc;--warn:#b45309;--arabic:'Alexandria',sans-serif;--r:8px;--body:'Outfit','Alexandria',system-ui,sans-serif;--head:'Syne','Alexandria',system-ui,sans-serif}
 header.hero{padding:70px 0 44px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#0a2a33,#06141a 60%)}
 h1{font-family:var(--head);font-size:clamp(2rem,8vw,3rem);overflow-wrap:break-word;margin:0 0 8px;letter-spacing:-1px}h1:after{content:" ✓ ⇢ ✗ ⇢ ⟲";color:var(--acc);font-size:1.4rem;margin-left:12px}.tag{color:var(--mut);font-size:1.15rem;max-width:620px}
 .hero .wrap{text-align:left}
@@ -53,13 +53,40 @@ footer a{display:inline-block;padding:14px 4px;min-height:44px;box-sizing:border
 pre,code,.err,.q,.finder,.results,.redcard,.scan,.stack,.proof,.os pre{direction:ltr;text-align:left;unicode-bidi:isolate}
 pre,code,.err,.q{font-family:ui-monospace,Menlo,Consolas,monospace}
 html[dir=rtl] .q{font-family:var(--body)}
-.ok b{color:#4fd18b}.no b{color:#ff8f7e}
+.ok b{color:#17703f}.no b{color:#a8281b}
 html[dir=rtl] #install,html[dir=rtl] #install .card{direction:ltr;text-align:left}
 html[dir=rtl] *{letter-spacing:0!important;text-transform:none!important}
+
+/* redesign: link pulse */
+:root{--ease:cubic-bezier(.2,.8,.2,1);--live:#17703f;--dead:#a8281b;--moved:#8a5300}
+header.hero{padding:58px 0 52px;background:radial-gradient(600px 300px at 90% 0,#d3f1ec,transparent 70%),var(--bg);border-bottom:1px solid var(--line)}
+.hero .wrap{max-width:1000px;display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:center}
+.hero h1{font-family:var(--head);font-weight:800;font-size:clamp(1.9rem,8.2vw,3.9rem);line-height:1;letter-spacing:-.03em;margin:0 0 14px;color:var(--fg)}
+.hero h1:after{content:none}
+.hero .tag{font-size:1.3rem;line-height:1.4;margin:0 0 22px;color:var(--fg);max-inline-size:24rem}
+.btn{border-radius:99px;min-block-size:44px;display:inline-flex;align-items:center}
+.pulse{min-inline-size:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 16px;box-shadow:0 14px 34px -18px rgba(14,116,144,.45);direction:ltr;text-align:left}
+.lk{display:grid;grid-template-columns:minmax(0,1fr) 72px;gap:4px 14px;align-items:center;padding:12px 0;border-bottom:1px solid #e3f2f0}
+.lk:last-child{border:0}
+.lk .u{font:500 .82rem/1.3 ui-monospace,Menlo,monospace;overflow-wrap:anywhere;color:var(--fg)}
+.lk .s{font:700 .7rem var(--head);letter-spacing:.1em;display:inline-block;margin-inline-end:8px}
+.lk.ok .s{color:var(--live)}.lk.mv .s{color:var(--moved)}.lk.bad .s{color:var(--dead)}
+.lk small{grid-column:1;color:var(--mut);font:500 .78rem/1.35 var(--body)}
+.lk svg{grid-column:2;grid-row:1/span 2;inline-size:72px;block-size:34px;overflow:visible}
+.lk path{fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:140;stroke-dashoffset:140;animation:beat 2.6s var(--ease) infinite}
+.lk.ok path{stroke:var(--live)}.lk.mv path{stroke:var(--moved)}.lk.bad path{stroke:var(--dead);stroke-dasharray:none;stroke-dashoffset:0;animation:none}
+.lk:nth-child(2) path{animation-delay:.3s}.lk:nth-child(3) path{animation-delay:.6s}
+@keyframes beat{0%{stroke-dashoffset:140}55%,100%{stroke-dashoffset:0}}
+@media (max-width:820px){.hero .wrap{grid-template-columns:minmax(0,1fr);gap:30px}.hero .wrap>*{min-inline-size:0}.lk .u{font-size:.74rem}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style></head><body>
-<header class="hero"><div class="wrap"><h1 data-ar="LinkRescue">LinkRescue</h1><p class="tag" data-ar="متسيبش اللينكات اللي حفظتها تموت.">Don't let the links you saved die.</p>
+<header class="hero"><div class="wrap"><div><h1 data-ar="LinkRescue">LinkRescue</h1><p class="tag" data-ar="متسيبش اللينكات اللي حفظتها تموت.">Don't let the links you saved die.</p>
 <a class="btn" data-ar="شوف الكود على GitHub" href="https://github.com/mohamed-elshamy-ai/linkrescue">View on GitHub</a><a class="btn alt" data-ar="التثبيت" href="#install">Install</a>
-<p class="mut" data-ar="مفتوحة المصدر · رخصة MIT · إصدار تجريبي v0.1.0" style="margin-top:16px">Open source · MIT license · early release v0.1.0</p></div></header>
+<p class="mut" data-ar="مفتوحة المصدر · رخصة MIT · إصدار تجريبي v0.1.0" style="margin-top:16px">Open source · MIT license · early release v0.1.0</p></div>
+<div aria-label="Example: four saved links checked; two available, one moved with an archived copy, one broken" class="pulse" role="img">
+<div class="lk ok"><div class="u"><span class="s">AVAILABLE</span>docs.python.org/3/tutorial/</div><svg aria-hidden="true" viewbox="0 0 92 34"><path d="M2 20 H26 L33 6 L42 30 L50 14 L56 20 H90"></path></svg><small>ok</small></div>
+<div class="lk mv"><div class="u"><span class="s">CONTENT MOVED</span>geocities.com/SiliconValley/</div><svg aria-hidden="true" viewbox="0 0 92 34"><path d="M2 20 H22 L29 8 L38 28 L46 20 H60 L68 12 L76 20 H90"></path></svg><small>redirects to a home page; archived copy found (1999)</small></div>
+<div class="lk bad"><div class="u"><span class="s">BROKEN</span>docs.python.org/3/no-such-page.html</div><svg aria-hidden="true" viewbox="0 0 92 34"><path d="M2 20 H90"></path></svg><small>HTTP 404; no archived copy found</small></div></div></div></header>
 <main class="wrap">
 <section><div class="grid"><div class="card"><b data-ar="خمس حالات واضحة">Five clear statuses</b><div class="mut" data-ar="متاح، الصفحة اتغيّرت، المحتوى اتنقل، مكسور، محظور.">AVAILABLE, PAGE CHANGED, CONTENT MOVED, BROKEN, BLOCKED.</div></div><div class="card"><b data-ar="نسخة نصية محلية">Local text copy</b><div class="mut" data-ar="تقدر تدوّر فيها بـ SQLite FTS5 حتى بعد ما الصفحة تموت.">Searchable with SQLite FTS5, even after the page dies.</div></div><div class="card"><b data-ar="بحث في الأرشيف">Archive lookup</b><div class="mut" data-ar="بتلاقي أقرب نسخة في Internet Archive للينكات الميتة.">Finds the closest Internet Archive copy for dead links.</div></div><div class="card"><b data-ar="فحص صريح">Honest checks</b><div class="mut" data-ar="الموقع اللي بيرفض الروبوتات يتسجل «محظور» مش «مكسور»، وصفحات 404 المقنّعة بتتمسك.">A site that refuses bots is BLOCKED, not BROKEN. Soft 404 pages are caught.</div></div><div class="card"><b data-ar="استيراد">Import</b><div class="mut" data-ar="مفضلات المتصفح أو قايمة روابط نصية أو JSON.">Browser bookmarks, a text list of URLs, or JSON.</div></div></div></section>
 <section><h2 data-ar="بتعمل إيه">What it does</h2><p data-ar="LinkRescue">LinkRescue keeps a list of links you care about. Each check tells you if a link is still fine, was redirected, is broken, or the page text changed from your saved copy. It stores the text locally so you can search it even after the page is gone, and for dead links it looks up an Internet Archive copy.</p></section>
