@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;700&family=Alexandria:wght@400;600;700&display=swap" rel="stylesheet"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LinkRescue: For people who save links: LinkRescue checks them, warns you when one breaks or its text changes, keeps a searchable local copy, and finds an Internet Archive version of the dead ones.</title><meta name="description" content="Checks your saved links, keeps a searchable local text copy, and finds an archived copy when a page dies.">
 <meta property="og:title" content="LinkRescue"><meta property="og:description" content="Checks your saved links, keeps a searchable local text copy, and finds an archived copy when a page dies.">
 <style>
@@ -22,10 +22,25 @@ footer img{border-radius:50%;border:2px solid var(--line);display:block;margin:0
 .badge{display:inline-block;font-size:.72rem;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mut);margin-left:6px;vertical-align:middle}
 .ok{color:#2e9e5b}.no{color:#c0392b}
 
-:root{--bg:#06141a;--fg:#e2f4f7;--mut:#7fb0ba;--card:#0b2229;--line:#17414c;--acc:#22d3ee;--accfg:#04181d;--code:#030c0f;--codefg:#a5f3fc;--warn:#fbbf24;--r:8px;--body:system-ui,-apple-system,Segoe UI,sans-serif;--head:system-ui,sans-serif}
+:root{--bg:#06141a;--fg:#e2f4f7;--mut:#7fb0ba;--card:#0b2229;--line:#17414c;--acc:#22d3ee;--accfg:#04181d;--code:#030c0f;--codefg:#a5f3fc;--warn:#fbbf24;--arabic:'Alexandria',sans-serif;--r:8px;--body:'Outfit','Alexandria',system-ui,sans-serif;--head:'Syne','Alexandria',system-ui,sans-serif}
 header.hero{padding:70px 0 44px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#0a2a33,#06141a 60%)}
 h1{font-size:clamp(2rem,8vw,3rem);overflow-wrap:break-word;margin:0 0 8px;letter-spacing:-1px}h1:after{content:" ✓ ⇢ ✗ ⇢ ⟲";color:var(--acc);font-size:1.4rem;margin-left:12px}.tag{color:var(--mut);font-size:1.15rem;max-width:620px}
-.hero .wrap{text-align:left}</style></head><body>
+.hero .wrap{text-align:left}
+/* design tokens: motion */
+:root{--ease-spring:cubic-bezier(.22,1.36,.32,1);--ease-out:cubic-bezier(.16,1,.3,1);--dur-m:.55s;--dur-s:.8s}
+/* Arabic: real family, no letter-spacing, taller lines */
+[dir="rtl"],[lang="ar"]{font-family:var(--arabic);letter-spacing:0;line-height:1.75}
+/* one orchestrated entrance: staggered hero reveal */
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hero .wrap>*{animation:rise var(--dur-s) var(--ease-out) both}
+.hero .wrap>*:nth-child(1){animation-delay:.05s}.hero .wrap>*:nth-child(2){animation-delay:.15s}.hero .wrap>*:nth-child(3){animation-delay:.25s}.hero .wrap>*:nth-child(4){animation-delay:.34s}.hero .wrap>*:nth-child(5){animation-delay:.42s}
+/* micro-interactions */
+.btn{transition:transform .2s var(--ease-spring),box-shadow .2s var(--ease-out)}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(0) scale(.97)}
+.card{transition:border-color .25s var(--ease-out),transform .25s var(--ease-out)}
+.card:hover{border-color:var(--acc);transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head><body>
 <header class="hero"><div class="wrap"><h1>LinkRescue</h1><p class="tag">Don&#x27;t let the links you saved die.</p>
 <a class="btn" href="https://github.com/mohamed-elshamy-ai/linkrescue">View on GitHub</a><a class="btn alt" href="#install">Install</a>
 <p class="mut" style="margin-top:16px">Open source &middot; MIT license &middot; early release v0.1.0</p></div></header>
