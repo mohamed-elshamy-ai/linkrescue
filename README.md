@@ -4,7 +4,6 @@
 
 Save the links you collect. LinkRescue checks them, tells you which ones died, moved or changed, keeps a text copy on your computer, and points you to an Internet Archive copy when one exists.
 
-احفظ لينكاتك، والأداة بتتابعها وتقولك مين مات أو اتنقل أو المحتوى اتغير، وبتحتفظ بنسخة نصية على جهازك وبتدلك على نسخة من Internet Archive لو موجودة.
 
 ## Worked example
 
@@ -48,7 +47,7 @@ Statuses: `AVAILABLE`, `PAGE CHANGED` (under 90% of the text matches your saved 
 | Windows / macOS | Should work, not tested. |
 | Android / browser extension | Not available. |
 
-## What it does NOT do (honest)
+## Limitations
 
 - Pages that need JavaScript to show their text are saved as the (nearly empty) HTML they send. There is no browser rendering yet, so those links may show "AVAILABLE" with little or no searchable text. Pages behind a login are not reachable.
 - The "main text" extraction is a simple rule (it drops navigation, sidebar, header, footer by tag and class name). It is not Trafilatura. Some sites will keep menu text or lose content.
@@ -59,7 +58,7 @@ Statuses: `AVAILABLE`, `PAGE CHANGED` (under 90% of the text matches your saved 
 - Some sites answer automated checks with 403/429 and get `BLOCKED`.
 - Existing tools do parts of this (for example ArchiveBox, Linkwarden, Wayback Machine). LinkRescue is a small local tool with no server; it is not a replacement for them.
 
-## Similar tools (honest comparison)
+## Related tools
 
 [Linkwarden](https://github.com/linkwarden/linkwarden) and ArchiveBox are fuller bookmark managers and archivers (self-hosted, with page archives). LinkRescue is a small command-line tool for link health with no server, plus an archive lookup. Use those if you want full-page archives.
 
@@ -67,8 +66,6 @@ Statuses: `AVAILABLE`, `PAGE CHANGED` (under 90% of the text matches your saved 
 
 [ARCHITECTURE.md](ARCHITECTURE.md), Arabic and English. 9 pytest tests against a local test server (`pytest`): available, 404, soft 404, redirect, blocked, dead host, changed page with kept copy, archive lookup, bookmark import. Output in [`demo/test-output.txt`](demo/test-output.txt).
 
-## How it works (بالعربي)
+## How it works
 
-بتضيف لينك (أو بتستورد ملف Bookmarks). الأداة بتفتح الصفحة وبتستخرج النص الأساسي منها (من غير القوائم والفوتر) وبتحفظه في قاعدة SQLite على جهازك مع بحث FTS5. كل مرة تعمل `check` بتفتح اللينك تاني وتقارن: لو رجع 404 أو صفحة "مش موجود" يبقى BROKEN وبتدور على نسخة في Internet Archive. لو اتحول للصفحة الرئيسية يبقى CONTENT MOVED. لو النص اختلف أكتر من 10% عن نسختك يبقى PAGE CHANGED ونسختك القديمة تفضل محفوظة وتقدر تشوف الفرق بـ `diff`. لو الموقع رفض الفحص بتتعلم BLOCKED مش BROKEN عشان متتخدعش. الصفحات اللي بتعتمد على JavaScript مش بتتقرا كويس.
-
-MIT License.
+You add a link (or import a bookmarks file). LinkRescue opens the page, extracts the main text without menus and footers, and stores it in a SQLite database on your computer with FTS5 search. Each `check` opens the link again and compares it: a 404 or a "not found" page is BROKEN, and LinkRescue looks for an Internet Archive copy; a redirect to the home page is CONTENT MOVED; text that differs from your saved copy by more than 10% is PAGE CHANGED, and your older copy is kept so you can see the difference with `diff`. If a site refuses the check, the link is marked BLOCKED, not BROKEN, so you are not misled. Pages that depend on JavaScript are not read well.
