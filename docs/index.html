@@ -1,6 +1,8 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;700&family=Alexandria:wght@400;600;700&display=swap" rel="stylesheet"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LinkRescue: For people who save links: LinkRescue checks them, warns you when one breaks or its text changes, keeps a searchable local copy, and finds an Internet Archive version of the dead ones.</title><meta name="description" content="Checks your saved links, keeps a searchable local text copy, and finds an archived copy when a page dies.">
-<meta property="og:title" content="LinkRescue"><meta property="og:description" content="Checks your saved links, keeps a searchable local text copy, and finds an archived copy when a page dies.">
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=Outfit:wght@400;500;700&amp;family=Alexandria:wght@400;600;700&amp;display=swap" rel="stylesheet"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>LinkRescue: For people who save links: LinkRescue checks them, warns you when one breaks or its text changes, keeps a searchable local copy, and finds an Internet Archive version of the dead ones.</title><meta content="Checks your saved links, keeps a searchable local text copy, and finds an archived copy when a page dies." name="description"/>
+<meta content="LinkRescue" property="og:title"/><meta content="Checks your saved links, keeps a searchable local text copy, and finds an archived copy when a page dies." property="og:description"/>
 <style>
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;font:16px/1.65 var(--body);background:var(--bg);color:var(--fg)}
@@ -45,15 +47,23 @@ h1{font-family:var(--head);font-size:clamp(2rem,8vw,3rem);overflow-wrap:break-wo
 .langtoggle{display:inline-flex;gap:4px;margin:0 0 14px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px}
 .langtoggle button{border:0;background:transparent;color:var(--mut);font:inherit;font-weight:600;min-height:44px;padding:8px 20px;border-radius:99px;cursor:pointer;transition:background .2s var(--ease-out),color .2s var(--ease-out)}
 .langtoggle button[aria-pressed="true"]{background:var(--acc);color:var(--accfg)}
-</style></head><body>
-<header class="hero"><div class="wrap"><h1>LinkRescue</h1><p class="tag">Don&#x27;t let the links you saved die.</p>
-<a class="btn" href="https://github.com/mohamed-elshamy-ai/linkrescue">View on GitHub</a><a class="btn alt" href="#install">Install</a>
-<p class="mut" style="margin-top:16px">Open source &middot; MIT license &middot; early release v0.1.0</p></div></header>
-<main class="wrap">
-<section><div class="grid"><div class="card"><b>Five clear statuses</b><div class="mut">AVAILABLE, PAGE CHANGED, CONTENT MOVED, BROKEN, BLOCKED.</div></div><div class="card"><b>Local text copy</b><div class="mut">Searchable with SQLite FTS5, even after the page dies.</div></div><div class="card"><b>Archive lookup</b><div class="mut">Finds the closest Internet Archive copy for dead links.</div></div><div class="card"><b>Honest checks</b><div class="mut">A site that refuses bots is BLOCKED, not BROKEN. Soft 404 pages are caught.</div></div><div class="card"><b>Import</b><div class="mut">Browser bookmarks, a text list of URLs, or JSON.</div></div></div></section>
-<section><h2>What it does</h2><p>LinkRescue keeps a list of links you care about. Each check tells you if a link is still fine, was redirected, is broken, or the page text changed from your saved copy. It stores the text locally so you can search it even after the page is gone, and for dead links it looks up an Internet Archive copy.</p></section>
 
-<section><h2>Examples</h2><h3>Real output (needs internet)</h3><pre><code>$ linkrescue add https://example.com/ https://docs.python.org/3/tutorial/ http://www.geocities.com/SiliconValley/ https://docs.python.org/3/no-such-page.html
+/* qa round 1: tokens for status colors, touch targets, RTL demo panels */
+footer a{display:inline-block;padding:14px 4px;min-height:44px;box-sizing:border-box}
+pre,code,.err,.q,.finder,.results,.redcard,.scan,.stack,.proof,.os pre{direction:ltr;text-align:left;unicode-bidi:isolate}
+pre,code,.err,.q{font-family:ui-monospace,Menlo,Consolas,monospace}
+html[dir=rtl] .q{font-family:var(--body)}
+.ok b{color:#4fd18b}.no b{color:#ff8f7e}
+html[dir=rtl] #install,html[dir=rtl] #install .card{direction:ltr;text-align:left}
+html[dir=rtl] *{letter-spacing:0!important;text-transform:none!important}
+</style></head><body>
+<header class="hero"><div class="wrap"><h1 data-ar="LinkRescue">LinkRescue</h1><p class="tag" data-ar="متسيبش اللينكات اللي حفظتها تموت.">Don't let the links you saved die.</p>
+<a class="btn" data-ar="شوف الكود على GitHub" href="https://github.com/mohamed-elshamy-ai/linkrescue">View on GitHub</a><a class="btn alt" data-ar="التثبيت" href="#install">Install</a>
+<p class="mut" data-ar="مفتوحة المصدر · رخصة MIT · إصدار تجريبي v0.1.0" style="margin-top:16px">Open source · MIT license · early release v0.1.0</p></div></header>
+<main class="wrap">
+<section><div class="grid"><div class="card"><b data-ar="خمس حالات واضحة">Five clear statuses</b><div class="mut" data-ar="متاح، الصفحة اتغيّرت، المحتوى اتنقل، مكسور، محظور.">AVAILABLE, PAGE CHANGED, CONTENT MOVED, BROKEN, BLOCKED.</div></div><div class="card"><b data-ar="نسخة نصية محلية">Local text copy</b><div class="mut" data-ar="تقدر تدوّر فيها بـ SQLite FTS5 حتى بعد ما الصفحة تموت.">Searchable with SQLite FTS5, even after the page dies.</div></div><div class="card"><b data-ar="بحث في الأرشيف">Archive lookup</b><div class="mut" data-ar="بتلاقي أقرب نسخة في Internet Archive للينكات الميتة.">Finds the closest Internet Archive copy for dead links.</div></div><div class="card"><b data-ar="فحص صريح">Honest checks</b><div class="mut" data-ar="الموقع اللي بيرفض الروبوتات يتسجل «محظور» مش «مكسور»، وصفحات 404 المقنّعة بتتمسك.">A site that refuses bots is BLOCKED, not BROKEN. Soft 404 pages are caught.</div></div><div class="card"><b data-ar="استيراد">Import</b><div class="mut" data-ar="مفضلات المتصفح أو قايمة روابط نصية أو JSON.">Browser bookmarks, a text list of URLs, or JSON.</div></div></div></section>
+<section><h2 data-ar="بتعمل إيه">What it does</h2><p data-ar="LinkRescue">LinkRescue keeps a list of links you care about. Each check tells you if a link is still fine, was redirected, is broken, or the page text changed from your saved copy. It stores the text locally so you can search it even after the page is gone, and for dead links it looks up an Internet Archive copy.</p></section>
+<section><h2 data-ar="أمثلة">Examples</h2><h3 data-ar="ناتج حقيقي (محتاج إنترنت)">Real output (needs internet)</h3><pre><code>$ linkrescue add https://example.com/ https://docs.python.org/3/tutorial/ http://www.geocities.com/SiliconValley/ https://docs.python.org/3/no-such-page.html
 1. AVAILABLE  https://example.com/
    ok
 2. AVAILABLE  https://docs.python.org/3/tutorial/
@@ -63,13 +73,12 @@ h1{font-family:var(--head);font-size:clamp(2rem,8vw,3rem);overflow-wrap:break-wo
 4. BROKEN  https://docs.python.org/3/no-such-page.html
    HTTP 404; no archived copy found
 
-$ linkrescue find &quot;classes modules&quot;
+$ linkrescue find "classes modules"
 2. The Python Tutorial — Python 3.15.2 documentation  [AVAILABLE]
    https://docs.python.org/3/tutorial/
    ...More on [Modules]
 6.1.1. Executing [modules] as scripts
 6.1...</code></pre></section>
-
 <section id="install"><h2>Install</h2><div class="os">
 <div class="card"><h3>Windows</h3><div class="mut">Install Python 3.9+ from python.org (tick "Add python.exe to PATH"), then in PowerShell:</div>
 <pre><code>py -m pip install git+https://github.com/mohamed-elshamy-ai/linkrescue
@@ -88,9 +97,9 @@ linkrescue import bookmarks.html
 linkrescue check</code></pre><div><span class="ok"><b>Tested.</b></span> Tested on Linux (Python 3.10).</div></div>
 <div class="card"><h3>Android</h3><div><span class="no"><b>Not available.</b></span> Not available as an app or extension.</div></div>
 </div></section>
-<section class="how-section"><h2><span class="lang-en">How it works</span><span class="lang-ar" hidden>إزاي بيشتغل</span></h2><div class="langtoggle" role="group" aria-label="Language / اللغة"><button type="button" data-lang="en" aria-pressed="true">English</button><button type="button" data-lang="ar" aria-pressed="false">العربية</button></div><div class="lang-en"><ol><li>You add links or import your bookmarks.</li><li>LinkRescue fetches each page and keeps the main text (menus and footers removed).</li><li>On each check it compares the page with your saved copy: 404 or a not-found page is BROKEN, a redirect to a home page is MOVED, a big text difference is CHANGED.</li><li>For dead links it asks the Internet Archive for the closest copy.</li><li>You search your saved text or run diff to see what changed.</li></ol>
+<section class="how-section"><h2><span class="lang-en">How it works</span><span class="lang-ar" hidden="">إزاي بيشتغل</span></h2><div aria-label="Language / اللغة" class="langtoggle" role="group"><button aria-pressed="true" data-lang="en" type="button">English</button><button aria-pressed="false" data-lang="ar" type="button">العربية</button></div><div class="lang-en"><ol><li>You add links or import your bookmarks.</li><li>LinkRescue fetches each page and keeps the main text (menus and footers removed).</li><li>On each check it compares the page with your saved copy: 404 or a not-found page is BROKEN, a redirect to a home page is MOVED, a big text difference is CHANGED.</li><li>For dead links it asks the Internet Archive for the closest copy.</li><li>You search your saved text or run diff to see what changed.</li></ol>
 </div><div class="card lang-ar" dir="rtl" lang="ar" style="text-align:start"><b>الشرح بالعربي</b><p>بتضيف لينكات أو بتستورد الـ Bookmarks. الأداة بتفتح كل صفحة وبتحفظ النص الأساسي على جهازك. كل مرة تفحص بتقارن بنسختك: 404 يعني BROKEN، تحويل للصفحة الرئيسية يعني MOVED، واختلاف كبير في النص يعني CHANGED، وللينكات الميتة بتدور على نسخة في Internet Archive. تقدر تدور جوه النصوص المحفوظة وتشوف الفرق. الصفحات اللي بتعتمد على JavaScript مش بتتقرا كويس.</p></div></section>
-<section><h2>Honest limits</h2><div class="card warn"><ul><li>No JavaScript rendering: script-built pages may have little or no saved text.</li><li>Text extraction is a simple rule, not Trafilatura. Menus may leak in or content may be lost on some sites.</li><li>Only text is saved, not the page layout or images.</li><li>The archive lookup needs internet access and does not submit pages to the archive.</li><li>Command line only. No extension and no built-in scheduler (use cron or Task Scheduler).</li></ul></div></section>
+<section><h2 data-ar="حدودها بصراحة">Honest limits</h2><div class="card warn"><ul><li data-ar="مفيش تشغيل JavaScript: الصفحات المبنية بسكريبت ممكن يبقى نصها المحفوظ قليل أو معدوم.">No JavaScript rendering: script-built pages may have little or no saved text.</li><li data-ar="استخراج النص بقاعدة بسيطة، مش Trafilatura. القوايم ممكن تدخل في النص أو المحتوى يضيع في بعض المواقع.">Text extraction is a simple rule, not Trafilatura. Menus may leak in or content may be lost on some sites.</li><li data-ar="النص بس هو اللي بيتحفظ، مش تصميم الصفحة ولا الصور.">Only text is saved, not the page layout or images.</li><li data-ar="البحث في الأرشيف محتاج إنترنت ومش بيرفع صفحات للأرشيف.">The archive lookup needs internet access and does not submit pages to the archive.</li><li data-ar="سطر أوامر بس. مفيش إضافة ولا مجدول مدمج (استخدم cron أو Task Scheduler).">Command line only. No extension and no built-in scheduler (use cron or Task Scheduler).</li></ul></div></section>
 </main>
 <footer>Built by <a href="https://github.com/mohamed-elshamy-ai">Mohamed Elshamy</a>. Issues and pull requests are welcome on <a href="https://github.com/mohamed-elshamy-ai/linkrescue">GitHub</a>.</footer>
 <script>
@@ -101,6 +110,8 @@ linkrescue check</code></pre><div><span class="ok"><b>Tested.</b></span> Tested 
   document.querySelectorAll('.lang-ar').forEach(function(e){e.hidden=lang!=='ar'});
   document.querySelectorAll('.langtoggle button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===lang?'true':'false')});
   document.querySelectorAll('.how-section').forEach(function(s){s.dir=lang==='ar'?'rtl':'ltr'});
+  document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-ar]').forEach(function(e){if(e.dataset.en===undefined)e.dataset.en=e.innerHTML;e.innerHTML=lang==='ar'?e.dataset.ar:e.dataset.en});
   try{localStorage.setItem(KEY,lang)}catch(e){}
  }
  var def=(navigator.language||'en').toLowerCase().indexOf('ar')===0?'ar':'en';
