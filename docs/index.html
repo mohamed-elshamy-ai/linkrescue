@@ -40,6 +40,11 @@ h1{font-family:var(--head);font-size:clamp(2rem,8vw,3rem);overflow-wrap:break-wo
 .card{transition:border-color .25s var(--ease-out),transform .25s var(--ease-out)}
 .card:hover{border-color:var(--acc);transform:translateY(-2px)}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* language toggle */
+.langtoggle{display:inline-flex;gap:4px;margin:0 0 14px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px}
+.langtoggle button{border:0;background:transparent;color:var(--mut);font:inherit;font-weight:600;min-height:44px;padding:8px 20px;border-radius:99px;cursor:pointer;transition:background .2s var(--ease-out),color .2s var(--ease-out)}
+.langtoggle button[aria-pressed="true"]{background:var(--acc);color:var(--accfg)}
 </style></head><body>
 <header class="hero"><div class="wrap"><h1>LinkRescue</h1><p class="tag">Don&#x27;t let the links you saved die.</p>
 <a class="btn" href="https://github.com/mohamed-elshamy-ai/linkrescue">View on GitHub</a><a class="btn alt" href="#install">Install</a>
@@ -83,9 +88,24 @@ linkrescue import bookmarks.html
 linkrescue check</code></pre><div><span class="ok"><b>Tested.</b></span> Tested on Linux (Python 3.10).</div></div>
 <div class="card"><h3>Android</h3><div><span class="no"><b>Not available.</b></span> Not available as an app or extension.</div></div>
 </div></section>
-<section><h2>How it works</h2><ol><li>You add links or import your bookmarks.</li><li>LinkRescue fetches each page and keeps the main text (menus and footers removed).</li><li>On each check it compares the page with your saved copy: 404 or a not-found page is BROKEN, a redirect to a home page is MOVED, a big text difference is CHANGED.</li><li>For dead links it asks the Internet Archive for the closest copy.</li><li>You search your saved text or run diff to see what changed.</li></ol>
-<div class="card" dir="rtl" lang="ar" style="text-align:start"><b>الشرح بالعربي</b><p>بتضيف لينكات أو بتستورد الـ Bookmarks. الأداة بتفتح كل صفحة وبتحفظ النص الأساسي على جهازك. كل مرة تفحص بتقارن بنسختك: 404 يعني BROKEN، تحويل للصفحة الرئيسية يعني MOVED، واختلاف كبير في النص يعني CHANGED، وللينكات الميتة بتدور على نسخة في Internet Archive. تقدر تدور جوه النصوص المحفوظة وتشوف الفرق. الصفحات اللي بتعتمد على JavaScript مش بتتقرا كويس.</p></div></section>
+<section class="how-section"><h2><span class="lang-en">How it works</span><span class="lang-ar" hidden>إزاي بيشتغل</span></h2><div class="langtoggle" role="group" aria-label="Language / اللغة"><button type="button" data-lang="en" aria-pressed="true">English</button><button type="button" data-lang="ar" aria-pressed="false">العربية</button></div><div class="lang-en"><ol><li>You add links or import your bookmarks.</li><li>LinkRescue fetches each page and keeps the main text (menus and footers removed).</li><li>On each check it compares the page with your saved copy: 404 or a not-found page is BROKEN, a redirect to a home page is MOVED, a big text difference is CHANGED.</li><li>For dead links it asks the Internet Archive for the closest copy.</li><li>You search your saved text or run diff to see what changed.</li></ol>
+</div><div class="card lang-ar" dir="rtl" lang="ar" style="text-align:start"><b>الشرح بالعربي</b><p>بتضيف لينكات أو بتستورد الـ Bookmarks. الأداة بتفتح كل صفحة وبتحفظ النص الأساسي على جهازك. كل مرة تفحص بتقارن بنسختك: 404 يعني BROKEN، تحويل للصفحة الرئيسية يعني MOVED، واختلاف كبير في النص يعني CHANGED، وللينكات الميتة بتدور على نسخة في Internet Archive. تقدر تدور جوه النصوص المحفوظة وتشوف الفرق. الصفحات اللي بتعتمد على JavaScript مش بتتقرا كويس.</p></div></section>
 <section><h2>Honest limits</h2><div class="card warn"><ul><li>No JavaScript rendering: script-built pages may have little or no saved text.</li><li>Text extraction is a simple rule, not Trafilatura. Menus may leak in or content may be lost on some sites.</li><li>Only text is saved, not the page layout or images.</li><li>The archive lookup needs internet access and does not submit pages to the archive.</li><li>Command line only. No extension and no built-in scheduler (use cron or Task Scheduler).</li></ul></div></section>
 </main>
 <footer>Built by <a href="https://github.com/mohamed-elshamy-ai">Mohamed Elshamy</a>. Issues and pull requests are welcome on <a href="https://github.com/mohamed-elshamy-ai/linkrescue">GitHub</a>.</footer>
-</body></html>
+<script>
+(function(){
+ var KEY='site-lang';
+ function apply(lang){
+  document.querySelectorAll('.lang-en').forEach(function(e){e.hidden=lang!=='en'});
+  document.querySelectorAll('.lang-ar').forEach(function(e){e.hidden=lang!=='ar'});
+  document.querySelectorAll('.langtoggle button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===lang?'true':'false')});
+  document.querySelectorAll('.how-section').forEach(function(s){s.dir=lang==='ar'?'rtl':'ltr'});
+  try{localStorage.setItem(KEY,lang)}catch(e){}
+ }
+ var def=(navigator.language||'en').toLowerCase().indexOf('ar')===0?'ar':'en';
+ var saved=null; try{saved=localStorage.getItem(KEY)}catch(e){}
+ apply(saved||def);
+ document.querySelectorAll('.langtoggle button').forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.lang)})});
+})();
+</script></body></html>
