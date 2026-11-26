@@ -1,5 +1,7 @@
 # LinkRescue
 
+[![tests](https://github.com/mohamed-elshamy-ai/linkrescue/actions/workflows/tests.yml/badge.svg)](https://github.com/mohamed-elshamy-ai/linkrescue/actions/workflows/tests.yml) ![tests: 9 passing](https://img.shields.io/badge/tests-9%20passing-brightgreen) ![license: MIT](https://img.shields.io/badge/license-MIT-blue)
+
 Save the links you collect. LinkRescue checks them, tells you which ones died, moved or changed, keeps a text copy on your computer, and points you to an Internet Archive copy when one exists.
 
 احفظ لينكاتك، والأداة بتتابعها وتقولك مين مات أو اتنقل أو المحتوى اتغير، وبتحتفظ بنسخة نصية على جهازك وبتدلك على نسخة من Internet Archive لو موجودة.
