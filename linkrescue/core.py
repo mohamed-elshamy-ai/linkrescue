@@ -2,7 +2,7 @@
 import difflib, hashlib, json, os, re, sqlite3, time, urllib.error, urllib.parse, urllib.request
 from html.parser import HTMLParser
 
-UA = "LinkRescue/0.1 (+https://github.com/Hamasa-ElShamy/linkrescue)"
+UA = "LinkRescue/0.1 (+https://github.com/hamasa-lshmn/linkrescue)"
 DB = os.environ.get("LINKRESCUE_DB") or os.path.expanduser("~/.linkrescue.db")
 CHANGED_BELOW = 0.90   # similarity under this = "PAGE CHANGED"
 MAX_BYTES = 2_000_000

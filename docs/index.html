@@ -81,7 +81,7 @@ header.hero{padding:58px 0 52px;background:radial-gradient(600px 300px at 90% 0,
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style></head><body>
 <header class="hero"><div class="wrap"><div><h1 data-ar="LinkRescue">LinkRescue</h1><p class="tag" data-ar="متسيبش اللينكات اللي حفظتها تموت.">Don't let the links you saved die.</p>
-<a class="btn" data-ar="شوف الكود على GitHub" href="https://github.com/Hamasa-ElShamy/linkrescue">View on GitHub</a><a class="btn alt" data-ar="التثبيت" href="#install">Install</a>
+<a class="btn" data-ar="شوف الكود على GitHub" href="https://github.com/hamasa-lshmn/linkrescue">View on GitHub</a><a class="btn alt" data-ar="التثبيت" href="#install">Install</a>
 <p class="mut" data-ar="مفتوحة المصدر · رخصة MIT · إصدار تجريبي v0.1.0" style="margin-top:16px">Open source · MIT license · early release v0.1.0</p></div>
 <div aria-label="Example: four saved links checked; two available, one moved with an archived copy, one broken" class="pulse" role="img">
 <div class="lk ok"><div class="u"><span class="s">AVAILABLE</span>docs.python.org/3/tutorial/</div><svg aria-hidden="true" viewbox="0 0 92 34"><path d="M2 20 H26 L33 6 L42 30 L50 14 L56 20 H90"></path></svg><small>ok</small></div>
@@ -108,17 +108,17 @@ $ linkrescue find "classes modules"
 6.1...</code></pre></section>
 <section id="install"><h2>Install</h2><div class="os">
 <div class="card"><h3>Windows</h3><div class="mut">Install Python 3.9+ from python.org (tick "Add python.exe to PATH"), then in PowerShell:</div>
-<pre><code>py -m pip install git+https://github.com/Hamasa-ElShamy/linkrescue
+<pre><code>py -m pip install git+https://github.com/hamasa-lshmn/linkrescue
 py -m pip install .
 linkrescue import bookmarks.html
 linkrescue check</code></pre><div><span class="mut"><b>Untested.</b></span> Should work (standard library only). Only tested on Linux.</div></div>
 <div class="card"><h3>macOS</h3><div class="mut">Python 3.9+ (<code>brew install python</code> or python.org), then in Terminal:</div>
-<pre><code>python3 -m pip install git+https://github.com/Hamasa-ElShamy/linkrescue
+<pre><code>python3 -m pip install git+https://github.com/hamasa-lshmn/linkrescue
 pip install .
 linkrescue import bookmarks.html
 linkrescue check</code></pre><div><span class="mut"><b>Untested.</b></span> Should work. Only tested on Linux.</div></div>
 <div class="card"><h3>Linux</h3><div class="mut">Python 3.9+ is usually installed. In a terminal:</div>
-<pre><code>python3 -m pip install --user git+https://github.com/Hamasa-ElShamy/linkrescue
+<pre><code>python3 -m pip install --user git+https://github.com/hamasa-lshmn/linkrescue
 pip install .
 linkrescue import bookmarks.html
 linkrescue check</code></pre><div><span class="ok"><b>Tested.</b></span> Tested on Linux (Python 3.10).</div></div>
@@ -128,7 +128,7 @@ linkrescue check</code></pre><div><span class="ok"><b>Tested.</b></span> Tested 
 </div><div class="card lang-ar" dir="rtl" lang="ar" style="text-align:start"><b>الشرح بالعربي</b><p>بتضيف لينكات أو بتستورد الـ Bookmarks. الأداة بتفتح كل صفحة وبتحفظ النص الأساسي على جهازك. كل مرة تفحص بتقارن بنسختك: 404 يعني BROKEN، تحويل للصفحة الرئيسية يعني MOVED، واختلاف كبير في النص يعني CHANGED، وللينكات الميتة بتدور على نسخة في Internet Archive. تقدر تدور جوه النصوص المحفوظة وتشوف الفرق. الصفحات اللي بتعتمد على JavaScript مش بتتقرا كويس.</p></div></section>
 <section><h2 data-ar="حدودها بصراحة">Honest limits</h2><div class="card warn"><ul><li data-ar="مفيش تشغيل JavaScript: الصفحات المبنية بسكريبت ممكن يبقى نصها المحفوظ قليل أو معدوم.">No JavaScript rendering: script-built pages may have little or no saved text.</li><li data-ar="استخراج النص بقاعدة بسيطة، مش Trafilatura. القوايم ممكن تدخل في النص أو المحتوى يضيع في بعض المواقع.">Text extraction is a simple rule, not Trafilatura. Menus may leak in or content may be lost on some sites.</li><li data-ar="النص بس هو اللي بيتحفظ، مش تصميم الصفحة ولا الصور.">Only text is saved, not the page layout or images.</li><li data-ar="البحث في الأرشيف محتاج إنترنت ومش بيرفع صفحات للأرشيف.">The archive lookup needs internet access and does not submit pages to the archive.</li><li data-ar="سطر أوامر بس. مفيش إضافة ولا مجدول مدمج (استخدم cron أو Task Scheduler).">Command line only. No extension and no built-in scheduler (use cron or Task Scheduler).</li></ul></div></section>
 </main>
-<footer>Built by <a href="https://github.com/Hamasa-ElShamy">Hamasa El Shamy</a>. Issues and pull requests are welcome on <a href="https://github.com/Hamasa-ElShamy/linkrescue">GitHub</a>.</footer>
+<footer>Built by <a href="https://github.com/hamasa-lshmn">hamasa lshmn</a>. Issues and pull requests are welcome on <a href="https://github.com/hamasa-lshmn/linkrescue">GitHub</a>.</footer>
 <script>
 (function(){
  var KEY='site-lang';
