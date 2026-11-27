@@ -1,6 +1,6 @@
 # LinkRescue
 
-[![tests](https://github.com/mohamed-elshamy-ai/linkrescue/actions/workflows/tests.yml/badge.svg)](https://github.com/mohamed-elshamy-ai/linkrescue/actions/workflows/tests.yml) ![tests: 9 passing](https://img.shields.io/badge/tests-9%20passing-brightgreen) ![license: MIT](https://img.shields.io/badge/license-MIT-blue)
+[![tests](https://github.com/mohamed-elshamy-ai/linkrescue/actions/workflows/tests.yml/badge.svg)](https://github.com/mohamed-elshamy-ai/linkrescue/actions/workflows/tests.yml) ![tests: 11 passing](https://img.shields.io/badge/tests-11%20passing-brightgreen) ![license: MIT](https://img.shields.io/badge/license-MIT-blue)
 
 Save the links you collect. LinkRescue checks them, tells you which ones died, moved or changed, keeps a text copy on your computer, and points you to an Internet Archive copy when one exists.
 
