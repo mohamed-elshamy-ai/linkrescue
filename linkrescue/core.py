@@ -25,7 +25,7 @@ class _Text(HTMLParser):
                 self.parts.append("\n")
             return
         a = dict(attrs)
-        junk = tag in self.SKIP or bool(self.JUNK.search((a.get("class") or "") + " " + (a.get("id") or "") + " " + (a.get("role") or "")))
+        junk = tag in self.SKIP or tag not in ("html", "body", "main", "article") and bool(self.JUNK.search((a.get("class") or "") + " " + (a.get("id") or "") + " " + (a.get("role") or "")))
         self.stack.append((tag, junk))
         self.skipping += junk
         if tag == "title":
@@ -119,11 +119,26 @@ def classify(url, old_text, wb=wayback):
             return "PAGE CHANGED", f"{round((1 - ratio) * 100)}% of the text differs from your saved copy", title, text, final
     if moved:
         return "CONTENT MOVED", f"redirects to {final}", title, text, final
+    if len(text) < 40:
+        return "AVAILABLE", f"ok, but only {len(text)} characters of text could be read (the page may need JavaScript, so the saved copy and 'find' will be weak)", title, text, final
     return "AVAILABLE", "ok", title, text, final
+
+
+def normalize_url(url):
+    """Add https:// when a bare domain is given; reject anything that is not a web address."""
+    u = (url or "").strip()
+    if not u: raise ValueError("empty address")
+    if not re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*://", u):
+        if re.match(r"[\w-]+(\.[\w-]+)+(/|$|\?|#)", u, re.U): u = "https://" + u
+        else: raise ValueError(f"'{u}' is not a web address (expected something like https://example.com/page)")
+    if urllib.parse.urlsplit(u).scheme not in ("http", "https") or not urllib.parse.urlsplit(u).netloc:
+        raise ValueError(f"'{u}' is not an http(s) web address")
+    return u
 
 
 def add(url, title=None, c=None):
     c = c or db()
+    url = normalize_url(url)
     now = time.time()
     c.execute("INSERT OR IGNORE INTO links(url,title,status,added) VALUES(?,?,?,?)", (url, title or "", "NEW", now))
     c.commit()
@@ -177,7 +192,9 @@ def accept(link_id, c=None):
 
 def diff(link_id, c=None):
     c = c or db()
-    old = c.execute("SELECT text FROM links WHERE id=?", (link_id,)).fetchone()[0] or ""
+    row = c.execute("SELECT text FROM links WHERE id=?", (link_id,)).fetchone()
+    if row is None: raise ValueError(f"no saved link with id {link_id}. Run `linkrescue list` to see the ids.")
+    old = row[0] or ""
     r = c.execute("SELECT text FROM snaps WHERE link_id=? ORDER BY id DESC LIMIT 1", (link_id,)).fetchone()
     new = r[0] if r else ""
     return [l for l in difflib.unified_diff(old.split("\n"), new.split("\n"), "saved", "latest", lineterm="", n=0)]
@@ -186,10 +203,17 @@ def diff(link_id, c=None):
 def import_file(path, c=None):
     """Bookmarks HTML, a text file with one URL per line, or a JSON list."""
     c = c or db()
-    raw = open(path, encoding="utf-8", errors="replace").read()
+    try:
+        with open(path, "rb") as fh: data = fh.read()
+    except OSError as e:
+        raise ValueError(f"cannot read '{path}': {e.strerror or e}")
+    if b"\0" in data[:4096]: raise ValueError(f"'{path}' looks like a binary file. Use a browser bookmarks export (.html), a .txt with one URL per line, or a JSON list.")
+    raw = data.decode("utf-8", errors="replace")
     urls = []
     if raw.lstrip().startswith("["):
-        urls = [(u if isinstance(u, str) else u.get("url"), None) for u in json.loads(raw)]
+        try: lst = json.loads(raw)
+        except ValueError as e: raise ValueError(f"'{path}' is not valid JSON: {e}")
+        urls = [(u if isinstance(u, str) else (u.get("url") if isinstance(u, dict) else None), None) for u in lst]
     else:
         pairs = re.findall(r'<a [^>]*href="(https?://[^"]+)"[^>]*>(.*?)</a>', raw, re.I | re.S)
         urls = [(u, re.sub(r"<[^>]+>", "", t).strip()) for u, t in pairs] or \
@@ -198,7 +222,8 @@ def import_file(path, c=None):
     for u, t in urls:
         if u:
             before = c.total_changes
-            add(u, t, c)
+            try: add(u, t, c)
+            except ValueError: continue
             n += c.total_changes > before
     return n
 

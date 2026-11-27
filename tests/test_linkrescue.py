@@ -57,3 +57,17 @@ def test_wayback_used_for_broken(srv):
 def test_import_html(tmp_path):
     p = tmp_path / "b.html"; p.write_text('<a href="https://a.example/x">A page</a><a href="https://b.example/">B</a>')
     c = core.db(); assert core.import_file(str(p), c) == 2
+
+
+def test_class_on_html_tag_does_not_hide_the_page():
+    from linkrescue import core
+    t, x = core.extract('<html class="vector-toc-pinned client-nojs"><head><title>T</title></head><body class="menu"><p>Real article text here.</p></body></html>')
+    assert t == "T" and "Real article text" in x
+
+
+def test_bad_urls_rejected():
+    import pytest
+    from linkrescue import core
+    for bad in ("", "javascript:alert(1)", "ftp://x.org", "not a url"):
+        with pytest.raises(ValueError): core.normalize_url(bad)
+    assert core.normalize_url("example.com/a") == "https://example.com/a"

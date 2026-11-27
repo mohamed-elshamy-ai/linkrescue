@@ -16,11 +16,15 @@ def main(argv=None):
     c = core.db()
     if o.cmd == "add":
         for u in o.urls:
+            try: u = core.normalize_url(u)
+            except ValueError as e:
+                print(f"skipped: {e}"); continue
             lid = core.add(u, None, c)
             st, dt = core.check(lid, c)
             print(f"{lid}. {st}  {u}\n   {dt}")
     elif o.cmd == "import":
-        print(f"added {core.import_file(o.file, c)} new links (run `linkrescue check`)")
+        try: print(f"added {core.import_file(o.file, c)} new links (run `linkrescue check`)")
+        except ValueError as e: sys.exit(f"linkrescue: {e}")
     elif o.cmd == "check":
         rows = c.execute("SELECT id FROM links ORDER BY id").fetchall()
         for (lid,) in rows:
@@ -38,7 +42,8 @@ def main(argv=None):
         for lid, u, st, t, sn in r:
             print(f"{lid}. {t or u}  [{st}]\n   {u}\n   {sn}")
     elif o.cmd == "diff":
-        print("\n".join(core.diff(o.id, c)) or "no difference")
+        try: print("\n".join(core.diff(o.id, c)) or "no difference")
+        except ValueError as e: sys.exit(f"linkrescue: {e}")
     elif o.cmd == "accept":
         print("accepted" if core.accept(o.id, c) else "nothing to accept")
 
